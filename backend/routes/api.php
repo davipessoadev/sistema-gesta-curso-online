@@ -1,9 +1,6 @@
 <?php
 
-use App\Models\Course;
-use Illuminate\Http\Request;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/courses', function (Request $request) {
-    return Course::all();
-});
+Route::apiResource('/courses', CourseController::class);
