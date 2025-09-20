@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  backend:
+    image: serversideup/php:8.2-fpm-nginx
+    container_name: sistema_gestao_curso_online_api
+    restart: "no"
+    volumes:
+      - ./backend:/var/www/html
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+    ports:
+      - "${BACKEND_PORT:-8080}:80"
+
+  db:
+    image: mysql:8.0
+    container_name: sistema_gestao_curso_online_database
+    restart: "no"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+volumes:
+  db_data:
