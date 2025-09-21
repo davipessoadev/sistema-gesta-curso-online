@@ -3,6 +3,7 @@ import { h, resolveComponent, ref, watch } from "vue";
 import type { TableColumn } from "@nuxt/ui";
 import type { Row } from "@tanstack/vue-table";
 
+const config = useRuntimeConfig();
 const UDropdownMenu = resolveComponent("UDropdownMenu");
 const UButton = resolveComponent("UButton");
 const toast = useToast();
@@ -27,7 +28,7 @@ const total = ref(0);
 
 async function fetchCourses(pageNumber = 1) {
   const { data } = await useFetch<ApiCoursesResponse>(
-    `http://localhost:8080/api/courses?page=${pageNumber}`
+    `${config.public.apiBase}/courses?page=${pageNumber}`
   );
 
   if (data.value) {

@@ -13,7 +13,7 @@ class BaseController extends Controller
 
     public function index()
     {
-        $items = $this->model::simplePaginate(10);
+        $items = $this->model::paginate(10);
 
         return response()->json($items, 200);
     }
