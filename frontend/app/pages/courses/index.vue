@@ -133,21 +133,24 @@ function getRowItems(row: Row<Course>) {
 
 <template>
   <div class="flex flex-col gap-4">
-    <!-- Header -->
-    <div class="mb-4">
-      <h1 class="text-2xl font-bold">Cursos Disponíveis</h1>
-      <p class="text-sm text-gray-500">
-        Lista de todos os cursos cadastrados no sistema, com duração e descrição
-        resumida.
-      </p>
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h1 class="text-2xl font-bold">Cursos Disponíveis</h1>
+        <p class="text-sm text-gray-500">
+          Lista de todos os cursos cadastrados no sistema, com duração e
+          descrição resumida.
+        </p>
+      </div>
+
+      <NuxtLink to="/courses/create">
+        <UButton color="primary" icon="i-lucide-plus"> Novo Curso </UButton>
+      </NuxtLink>
     </div>
 
-    <!-- Tabela responsiva -->
     <div class="overflow-x-auto w-full">
       <UTable :data="courses" :columns="columns" class="w-full table-auto" />
     </div>
 
-    <!-- Paginação -->
     <UPagination v-model:page="page" :total="total" />
   </div>
 </template>
