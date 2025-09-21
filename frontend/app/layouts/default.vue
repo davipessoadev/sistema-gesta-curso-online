@@ -19,7 +19,7 @@ const items = ref<NavigationMenuItem[][]>([
       label: "Alunos",
       icon: "i-lucide-users",
       type: "link",
-      to: "/alunos",
+      to: "/students",
     },
   ],
 ]);
