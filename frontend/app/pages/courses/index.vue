@@ -2,6 +2,7 @@
 import { h, resolveComponent, ref, watch } from "vue";
 import type { TableColumn } from "@nuxt/ui";
 import type { Row } from "@tanstack/vue-table";
+import ConfirmDeleteModal from "~/components/courses/confirm-delete-modal.vue";
 
 const config = useRuntimeConfig();
 const UDropdownMenu = resolveComponent("UDropdownMenu");
@@ -25,6 +26,9 @@ type ApiCoursesResponse = {
 const page = ref(1);
 const courses = ref<Course[]>([]);
 const total = ref(0);
+
+const showDeleteModal = ref(false);
+const courseToDelete = ref<Course | null>(null);
 
 async function fetchCourses(pageNumber = 1) {
   const { data } = await useFetch<ApiCoursesResponse>(
@@ -100,17 +104,17 @@ const columns: TableColumn<Course>[] = [
   },
 ];
 
-// Função do menu de ações
 function getRowItems(row: Row<Course>) {
   return [
     { type: "label", label: "Ações" },
     {
       label: "Ver detalhes",
-      to: `/courses/${row.original.id}`, // 🔗 link dinâmico
+      to: `/courses/${row.original.id}`,
       icon: "i-lucide-eye",
     },
     {
       label: "Editar curso",
+      icon: "i-lucide-eye",
       onSelect() {
         toast.add({
           title: `Editando curso: ${row.original.name}`,
@@ -120,14 +124,40 @@ function getRowItems(row: Row<Course>) {
     },
     {
       label: "Deletar curso",
+      icon: "i-lucide-trash",
       onSelect() {
-        toast.add({
-          title: `Curso deletado: ${row.original.name}`,
-          color: "error",
-        });
+        courseToDelete.value = row.original;
+        showDeleteModal.value = true;
       },
     },
   ];
+}
+
+async function confirmDelete() {
+  if (!courseToDelete.value) return;
+  try {
+    const { error } = await useFetch(
+      `${config.public.apiBase}/courses/${courseToDelete.value.id}`,
+      { method: "DELETE" }
+    );
+
+    if (error.value) {
+      toast.add({
+        title: "Erro ao deletar curso",
+        description: error.value.message,
+        color: "error",
+      });
+    } else {
+      courses.value = courses.value.filter(
+        (c) => c.id !== courseToDelete.value?.id
+      );
+
+      toast.add({ title: "Curso deletado com sucesso!", color: "success" });
+    }
+  } finally {
+    showDeleteModal.value = false;
+    courseToDelete.value = null;
+  }
 }
 </script>
 
@@ -152,5 +182,11 @@ function getRowItems(row: Row<Course>) {
     </div>
 
     <UPagination v-model:page="page" :total="total" />
+
+    <ConfirmDeleteModal
+      v-model:open="showDeleteModal"
+      :course="courseToDelete"
+      @confirm="confirmDelete"
+    />
   </div>
 </template>
