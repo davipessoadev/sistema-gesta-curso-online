@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormCourseRequest;
 use App\Models\Course;
-use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
+use Exception;
 
 class CourseController extends Controller
 {
@@ -13,7 +13,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
+        $courses = Course::simplePaginate(10);
 
         return response()->json($courses, 200);
     }
@@ -21,9 +21,23 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FormCourseRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        try {
+            $course = new Course();
+
+            $course->fill($data);
+
+            $course->save();
+
+            return response()->json($course, 201);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'message' => 'Erro ao cadastrar o curso'
+            ], 400);
+        }
     }
 
     /**
@@ -31,15 +45,35 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $course = Course::findOrFail($id);
+
+            return response()->json($course, 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'message' => 'Erro ao buscar o curso'
+            ], 400);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FormCourseRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+
+        try {
+            $course = Course::find($id);
+
+            $course->update($data);
+
+            return response()->json($course, 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'message' => 'Erro ao atualizar o curso'
+            ], 400);
+        }
     }
 
     /**
@@ -47,6 +81,18 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $removed = Course::destroy($id);
+
+            if (!$removed) {
+                throw new Exception();
+            }
+
+            return response()->json(null, 204);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'message' => 'Erro ao remover o curso'
+            ], 400);
+        }
     }
 }
