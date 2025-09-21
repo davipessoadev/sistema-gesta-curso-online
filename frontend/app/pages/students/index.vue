@@ -145,14 +145,14 @@ async function confirmDelete() {
   <div class="flex flex-col gap-4">
     <div class="flex items-center justify-between mb-4">
       <div>
-        <h1 class="text-2xl font-bold">Estudantes Cadastrados</h1>
+        <h1 class="text-2xl font-bold">Alunos Cadastrados</h1>
         <p class="text-sm text-gray-500">
-          Lista de todos os estudantes registrados no sistema, com CPF e e-mail.
+          Lista de todos os alunos registrados no sistema, com CPF e e-mail.
         </p>
       </div>
 
       <NuxtLink to="/students/create">
-        <UButton color="primary" icon="i-lucide-plus"> Novo Estudante </UButton>
+        <UButton color="primary" icon="i-lucide-plus"> Novo Alunos </UButton>
       </NuxtLink>
     </div>
 

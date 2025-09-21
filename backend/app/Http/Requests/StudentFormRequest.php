@@ -31,6 +31,13 @@ class StudentFormRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'cpf' => preg_replace('/\D/', '', $this->cpf),
+        ]);
+    }
+
     public function messages(): array
     {
         return [
