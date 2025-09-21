@@ -27,7 +27,7 @@ class FormStudentRequest extends FormRequest
         return [
             "name" => "required|string",
             "email" => "required|email|unique:students,email,{$studentId}",
-            "cpf" => ['required', 'string', 'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/', new CpfRule]
+            "cpf" => ['required', 'string', 'unique:students', 'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/', new CpfRule]
         ];
     }
 
