@@ -8,6 +8,6 @@ use App\Models\Course;
 class CourseController extends BaseController
 {
     protected string $model = Course::class;
-    protected string $entityName = "Curso";
+    protected string $entityName = "curso";
     protected ?string $formRequest = FormCourseRequest::class;
 }
