@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\CpfRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FormStudentRequest extends FormRequest
+class StudentFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +35,7 @@ class FormStudentRequest extends FormRequest
     {
         return [
             'name.string' => 'O campo nome deve ser um texto',
-            'student_id.exists' => 'O ID deve ser de um curso existente',
+            'student_id.exists' => 'O ID do aluno deve ser existente',
         ];
     }
 }

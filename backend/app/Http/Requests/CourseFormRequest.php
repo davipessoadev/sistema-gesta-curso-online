@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Course;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FormCourseRequest extends FormRequest
+class CourseFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -55,7 +55,7 @@ class FormCourseRequest extends FormRequest
             'duration_hours.required' => 'O campo duração do curso é obrigatória',
             'duration_hours.integer' => 'O campo duração do curso deve ser um valor numerico',
             'duration_hours.min' => 'A duração do curso deve ser um número positivo',
-            'course_id.exists' => 'O ID deve ser de um curso existente',
+            'course_id.exists' => 'O ID do curso deve ser existente',
         ];
     }
 
