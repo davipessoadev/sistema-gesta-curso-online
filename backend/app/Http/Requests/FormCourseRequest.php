@@ -53,8 +53,9 @@ class FormCourseRequest extends FormRequest
             'name.string' => 'O campo nome deve ser um texto',
             'description.string' => 'A descrição do curso deve ser um texto',
             'duration_hours.required' => 'O campo duração do curso é obrigatória',
-            'duration_hours.integer' => ') campo duração do curso deve ser um valor numerico',
+            'duration_hours.integer' => 'O campo duração do curso deve ser um valor numerico',
             'duration_hours.min' => 'A duração do curso deve ser um número positivo',
+            'course_id.exists' => 'O ID deve ser de um curso existente',
         ];
     }
 
