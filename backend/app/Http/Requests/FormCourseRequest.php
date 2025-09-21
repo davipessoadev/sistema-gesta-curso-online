@@ -26,7 +26,7 @@ class FormCourseRequest extends FormRequest
         $rules = [
             "name" => "required|string|max:60",
             "description" => "nullable",
-            "duration_hours" => "required|integer",
+            "duration_hours" => "required|integer|min:1",
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
@@ -50,15 +50,11 @@ class FormCourseRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'O nome do curso é obrigatório',
-            'name.max' => 'O nome não deve conter mais que 60 caracteres',
-            'name.string' => 'O nome do curso deve ser um texto',
+            'name.string' => 'O campo nome deve ser um texto',
             'description.string' => 'A descrição do curso deve ser um texto',
-            'duration_hours.required' => 'A duração do curso é obrigatória',
-            'duration_hours.integer' => 'A duração do curso deve ser um valor numerico',
+            'duration_hours.required' => 'O campo duração do curso é obrigatória',
+            'duration_hours.integer' => ') campo duração do curso deve ser um valor numerico',
             'duration_hours.min' => 'A duração do curso deve ser um número positivo',
-            'course_id.required' => 'O ID do curso é obrigatório',
-            'course_id.exists' => 'O curso deve ser válido',
         ];
     }
 
