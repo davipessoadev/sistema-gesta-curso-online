@@ -8,7 +8,7 @@ const UDropdownMenu = resolveComponent("UDropdownMenu");
 const UButton = resolveComponent("UButton");
 const toast = useToast();
 
-type Course = {
+export type Course = {
   id: string;
   name: string;
   description: string;
@@ -105,25 +105,9 @@ function getRowItems(row: Row<Course>) {
   return [
     { type: "label", label: "Ações" },
     {
-      label: "Copiar ID do curso",
-      onSelect() {
-        navigator.clipboard.writeText(row.original.id);
-        toast.add({
-          title: "ID do curso copiado!",
-          color: "success",
-          icon: "i-lucide-circle-check",
-        });
-      },
-    },
-    { type: "separator" },
-    {
       label: "Ver detalhes",
-      onSelect() {
-        toast.add({
-          title: `Visualizando curso: ${row.original.name}`,
-          color: "info",
-        });
-      },
+      to: `/courses/${row.original.id}`, // 🔗 link dinâmico
+      icon: "i-lucide-eye",
     },
     {
       label: "Editar curso",
