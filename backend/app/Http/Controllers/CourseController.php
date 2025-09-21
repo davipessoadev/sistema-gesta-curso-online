@@ -25,19 +25,13 @@ class CourseController extends Controller
     {
         $data = $request->validated();
 
-        try {
-            $course = new Course();
+        $course = new Course();
 
-            $course->fill($data);
+        $course->fill($data);
 
-            $course->save();
+        $course->save();
 
-            return response()->json($course, 201);
-        } catch (\Exception $ex) {
-            return response()->json([
-                'message' => 'Erro ao cadastrar o curso'
-            ], 400);
-        }
+        return response()->json($course, 201);
     }
 
     /**
@@ -45,15 +39,13 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $course = Course::findOrFail($id);
+        $course = Course::findOrFail($id);
 
-            return response()->json($course, 200);
-        } catch (\Exception $ex) {
-            return response()->json([
-                'message' => 'Erro ao buscar o curso'
-            ], 400);
+        if (!$course) {
+            throw new Exception("Erro ao localizar o curso");
         }
+
+        return response()->json($course, 200);
     }
 
     /**
@@ -63,17 +55,12 @@ class CourseController extends Controller
     {
         $data = $request->validated();
 
-        try {
-            $course = Course::find($id);
+        $course = Course::find($id);
 
-            $course->update($data);
+        $course->update($data);
 
-            return response()->json($course, 200);
-        } catch (\Exception $ex) {
-            return response()->json([
-                'message' => 'Erro ao atualizar o curso'
-            ], 400);
-        }
+        return response()->json($course, 200);
+
     }
 
     /**
@@ -81,18 +68,12 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $removed = Course::destroy($id);
+        $removed = Course::destroy($id);
 
-            if (!$removed) {
-                throw new Exception();
-            }
-
-            return response()->json(null, 204);
-        } catch (\Exception $ex) {
-            return response()->json([
-                'message' => 'Erro ao remover o curso'
-            ], 400);
+        if (!$removed) {
+            throw new Exception("Erro ao remover o curso");
         }
+
+        return response()->json(null, 204);
     }
 }
