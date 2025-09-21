@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Course } from "./index.vue";
+import type { Course } from "../index.vue";
 
 const route = useRoute();
 const config = useRuntimeConfig();

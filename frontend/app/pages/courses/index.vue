@@ -114,13 +114,8 @@ function getRowItems(row: Row<Course>) {
     },
     {
       label: "Editar curso",
-      icon: "i-lucide-eye",
-      onSelect() {
-        toast.add({
-          title: `Editando curso: ${row.original.name}`,
-          color: "warning",
-        });
-      },
+      icon: "i-lucide-edit",
+      to: `/courses/${row.original.id}/edit`,
     },
     {
       label: "Deletar curso",
