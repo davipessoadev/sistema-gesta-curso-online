@@ -5,6 +5,10 @@ import type { TableColumn } from "@nuxt/ui";
 const config = useRuntimeConfig();
 const UButton = resolveComponent("UButton");
 
+const filterOptions = ref(["Nome", "Email", "CPF"]);
+const filterValue = ref("Nome");
+const filterSearch = ref("");
+
 export type Student = {
   id: string;
   name: string;
@@ -24,9 +28,21 @@ const students = ref<Student[]>([]);
 const total = ref(0);
 
 async function fetchStudents(pageNumber = 1) {
-  const { data } = await useFetch<ApiStudentsResponse>(
-    `${config.public.apiBase}/students?page=${pageNumber}`
+  const params = new URLSearchParams();
+  params.append("page", pageNumber.toString());
+
+  if (filterSearch.value) {
+    params.append("filterField", filterValue.value);
+    params.append("filterValue", filterSearch.value);
+  }
+
+  const { data, error } = await useFetch<ApiStudentsResponse>(
+    `${config.public.apiBase}/students?page=${pageNumber}?${params.toString()}`
   );
+
+  if (error.value) {
+    toast.add({ title: "Erro ao buscar alunos", color: "error" });
+  }
 
   if (data.value) {
     students.value = data.value.data;
@@ -74,6 +90,20 @@ const columns: TableColumn<Student>[] = [
       <NuxtLink to="/students/create">
         <UButton color="primary" icon="i-lucide-plus"> Novo Alunos </UButton>
       </NuxtLink>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <USelect v-model="filterValue" :items="filterOptions" class="w-30" />
+      <UInput v-model="filterSearch" />
+
+      <UButton
+        icon="i-lucide-search"
+        size="md"
+        color="neutral"
+        variant="solid"
+        @click="() => fetchStudents(1)"
+        >Buscar</UButton
+      >
     </div>
 
     <div class="overflow-x-auto w-full">
