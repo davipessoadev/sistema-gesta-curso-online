@@ -16,7 +16,6 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
 ### Pré-requisitos
 - Docker e Docker Compose instalados
 - Git
-- Node.js (para desenvolvimento frontend)
 
 ### Passos para Instalação
 
@@ -26,18 +25,11 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
    cd sistema-gesta-curso-online
    ```
 
-2. **Configuração do Frontend**
-   ```bash
-   cd frontend
-   npm install
-   # ou
-   yarn install
-   ```
-
-3. **Configuração das Variáveis de Ambiente**
+2. **Configuração das Variáveis de Ambiente**
    
    **Frontend**: Copie e configure o arquivo de variáveis de ambiente
    ```bash
+   cd frontend
    cp .env.example .env
    ```
    
@@ -47,7 +39,7 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
    cp .env.example .env
    ```
 
-4. **Inicialização com Docker**
+3. **Inicialização com Docker**
    ```bash
    # Na raiz do projeto
    docker-compose up -d
@@ -71,6 +63,7 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
 
 - **Nuxt UI**: Escolhido para acelerar o desenvolvimento do frontend, fornecendo componentes pré-construídos e uma interface moderna
 - **ApiDog**: Uma alternativa ao Postman ou Insomnia, e foi escolhida por disponibilizar documentação online e fácil de utilizar.
+- **Zod**: Pela familiaridade já com a lib que uso para validar formulários de aplicações em ReactJS.
 
 ## Acesso à Aplicação
 
