@@ -15,15 +15,9 @@ class CourseController extends Controller
         return response()->json($courses, 200);
     }
 
-    public function show(string $id)
+    public function show(Course $course)
     {
-        $courseFound = Course::find($id);
-
-        if (!$courseFound) {
-            throw new Exception("Curso não localizado.", 404);
-        }
-
-        return response()->json($courseFound, 200);
+        return response()->json($course, 200);
     }
 
     public function store(CourseFormRequest $request)
@@ -39,15 +33,13 @@ class CourseController extends Controller
         return response()->json($course, 201);
     }
 
-    public function update(CourseFormRequest $request, string $id)
+    public function update(CourseFormRequest $request, Course $course)
     {
         $data = $request->validated();
 
-        $courseFound = Course::find($id);
+        $course->update($data);
 
-        $courseFound->update($data);
-
-        return response()->json($courseFound, 200);
+        return response()->json($course, 200);
 
     }
 
@@ -62,12 +54,8 @@ class CourseController extends Controller
         return response()->json(null, 204);
     }
 
-    public function getStudents(string $id) {
-        $courseWithStudents = Course::find($id)->students;
-
-        if (!$courseWithStudents) {
-            throw new Exception("Curso não encontrado");
-        }
+    public function getStudents(Course $course) {
+        $courseWithStudents = $course->students;
 
         return response()->json($courseWithStudents, 200);
     }

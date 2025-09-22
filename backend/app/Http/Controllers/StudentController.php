@@ -15,56 +15,48 @@ class StudentController extends Controller
         $field = $request->validated('field');
         $value = $request->validated('value');
 
-        $items = Student::query()
+        $students = Student::query()
             ->when($field && $value, function ($query) use ($field, $value) {
                 $query->where($field, 'like', "%{$value}%");
             })
         ->paginate(10);
 
-    return response()->json($items, 200);
+    return response()->json($students, 200);
     }
 
-    public function show(string $id)
+    public function show(Student $student)
     {
-        $itemFound = Student::find($id);
-
-        if (!$itemFound) {
-            throw new Exception("Aluno não localizado.", 404);
-        }
-
-        return response()->json($itemFound, 200);
+        return response()->json($student, 200);
     }
 
     public function store(StudentFormRequest $request)
     {
         $data = $request->validated();
 
-        $item = new Student();
+        $student = new Student();
 
-        $item->fill($data);
+        $student->fill($data);
 
-        $item->save();
+        $student->save();
 
-        return response()->json($item, 201);
+        return response()->json($student, 201);
     }
 
-    public function update(StudentFormRequest $request, string $id)
+    public function update(StudentFormRequest $request, Student $student)
     {
         $data = $request->validated();
 
-        $itemFound = Student::find($id);
+        $student->update($data);
 
-        $itemFound->update($data);
-
-        return response()->json($itemFound, 200);
+        return response()->json($student, 200);
 
     }
 
     public function destroy(string $id)
     {
-        $removed = Student::destroy($id);
+        $removedStudent = Student::destroy($id);
 
-        if (!$removed) {
+        if (!$removedStudent) {
             throw new Exception("Aluno não removido", 404);
         }
 

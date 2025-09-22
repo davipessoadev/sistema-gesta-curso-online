@@ -25,7 +25,6 @@ const state = reactive({
   duration_hours: props.course?.duration_hours || 1,
 });
 
-// Atualizar state se prop mudar (ex.: async fetch)
 watch(
   () => props.course,
   (newCourse) => {

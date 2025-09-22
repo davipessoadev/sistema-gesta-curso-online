@@ -29,10 +29,6 @@ class CourseFormRequest extends FormRequest
             "duration_hours" => "required|integer|min:1",
         ];
 
-        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['course_id'] = 'required|exists:courses,id';
-        }
-
         return $rules;
     }
 

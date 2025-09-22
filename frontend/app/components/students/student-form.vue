@@ -28,7 +28,6 @@ const state = reactive({
   cpf: props.student?.cpf || "",
 });
 
-// Atualiza state se `student` mudar
 watch(
   () => props.student,
   (newStudent) => {
