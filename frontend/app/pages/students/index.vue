@@ -4,9 +4,23 @@ import type { TableColumn } from "@nuxt/ui";
 
 const config = useRuntimeConfig();
 const UButton = resolveComponent("UButton");
+const toast = useToast();
 
-const filterOptions = ref(["Nome", "Email", "CPF"]);
-const filterValue = ref("Nome");
+const filterOptions = ref([
+  {
+    value: "name",
+    label: "Nome",
+  },
+  {
+    value: "email",
+    label: "Email",
+  },
+  {
+    value: "cpf",
+    label: "CPF",
+  },
+]);
+const filterValue = ref("name");
 const filterSearch = ref("");
 
 export type Student = {
@@ -32,8 +46,8 @@ async function fetchStudents(pageNumber = 1) {
   params.append("page", pageNumber.toString());
 
   if (filterSearch.value) {
-    params.append("filterField", filterValue.value);
-    params.append("filterValue", filterSearch.value);
+    params.append("field", filterValue.value);
+    params.append("value", filterSearch.value);
   }
 
   const { data, error } = await useFetch<ApiStudentsResponse>(
@@ -41,7 +55,11 @@ async function fetchStudents(pageNumber = 1) {
   );
 
   if (error.value) {
-    toast.add({ title: "Erro ao buscar alunos", color: "error" });
+    toast.add({
+      title: "Erro ao buscar os alunos",
+      description: error.value.data.message,
+      color: "error",
+    });
   }
 
   if (data.value) {
