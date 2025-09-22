@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { h, resolveComponent, ref, watch } from "vue";
+import { resolveComponent, ref, watch } from "vue";
 import type { TableColumn } from "@nuxt/ui";
-import type { Row } from "@tanstack/vue-table";
 
 const config = useRuntimeConfig();
-const UDropdownMenu = resolveComponent("UDropdownMenu");
 const UButton = resolveComponent("UButton");
-const toast = useToast();
 
 export type Student = {
   id: string;
@@ -25,9 +22,6 @@ type ApiStudentsResponse = {
 const page = ref(1);
 const students = ref<Student[]>([]);
 const total = ref(0);
-
-const showDeleteModal = ref(false);
-const studentToDelete = ref<Student | null>(null);
 
 async function fetchStudents(pageNumber = 1) {
   const { data } = await useFetch<ApiStudentsResponse>(
@@ -64,81 +58,7 @@ const columns: TableColumn<Student>[] = [
         year: "numeric",
       }),
   },
-  {
-    id: "actions",
-    cell: ({ row }) =>
-      h(
-        "div",
-        { class: "text-right" },
-        h(
-          UDropdownMenu,
-          {
-            content: { align: "end" },
-            items: getRowItems(row),
-            "aria-label": "Ações do estudante",
-          },
-          () =>
-            h(UButton, {
-              icon: "i-lucide-ellipsis-vertical",
-              color: "neutral",
-              variant: "ghost",
-              class: "ml-auto",
-              "aria-label": "Ações do estudante",
-            })
-        )
-      ),
-  },
 ];
-
-function getRowItems(row: Row<Student>) {
-  return [
-    { type: "label", label: "Ações" },
-    {
-      label: "Ver detalhes",
-      to: `/students/${row.original.id}`,
-      icon: "i-lucide-eye",
-    },
-    {
-      label: "Editar estudante",
-      icon: "i-lucide-edit",
-      to: `/students/${row.original.id}/edit`,
-    },
-    {
-      label: "Deletar estudante",
-      icon: "i-lucide-trash",
-      onSelect() {
-        studentToDelete.value = row.original;
-        showDeleteModal.value = true;
-      },
-    },
-  ];
-}
-
-async function confirmDelete() {
-  if (!studentToDelete.value) return;
-  try {
-    const { error } = await useFetch(
-      `${config.public.apiBase}/students/${studentToDelete.value.id}`,
-      { method: "DELETE" }
-    );
-
-    if (error.value) {
-      toast.add({
-        title: "Erro ao deletar estudante",
-        description: error.value.message,
-        color: "error",
-      });
-    } else {
-      students.value = students.value.filter(
-        (s) => s.id !== studentToDelete.value?.id
-      );
-      toast.add({ title: "Estudante deletado com sucesso!", color: "success" });
-    }
-  } finally {
-    showDeleteModal.value = false;
-    studentToDelete.value = null;
-  }
-}
 </script>
 
 <template>

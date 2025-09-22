@@ -13,7 +13,7 @@ class CourseController extends BaseController
     protected ?string $formRequest = CourseFormRequest::class;
 
     public function getStudents(string $id) {
-        $courseWithStudents = $this->model::with('students')->find($id);
+        $courseWithStudents = $this->model::find($id)->students;
 
         if (!$courseWithStudents) {
             throw new Exception("Curso não encontrado");

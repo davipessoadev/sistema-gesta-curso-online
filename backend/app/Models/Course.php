@@ -18,6 +18,6 @@ class Course extends Model
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(Student::class, 'enrollments');
+        return $this->belongsToMany(Student::class, 'enrollments')->withPivot('id', 'progress_percentage', 'enrollment_date');
     }
 }

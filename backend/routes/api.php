@@ -13,4 +13,4 @@ Route::post('/students', [StudentController::class, 'store']);
 Route::get('/students', [StudentController::class, 'index']);
 
 Route::post('/enrollments', [EnrollmentController::class, 'store']);
-Route::put('/enrollments/{id}/progress', [EnrollmentController::class, 'update']);
+Route::patch('/enrollments/{id}/progress', [EnrollmentController::class, 'update']);
