@@ -2,6 +2,7 @@
 import { reactive, watch } from "vue";
 import { z } from "zod";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { vMaska } from "maska/vue";
 
 const props = defineProps<{
   student?: { name: string; email: string; cpf: string };
@@ -17,7 +18,7 @@ const schema = z.object({
   email: z.string().email("E-mail inválido"),
   cpf: z
     .string()
-    .min(14, "CPF deve ter 11 dígitos") // 000.000.000-00 → 14 caracteres com pontos e hífen
+    .min(14, "CPF deve ter 11 dígitos")
     .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
 });
 
@@ -27,7 +28,7 @@ const state = reactive({
   cpf: props.student?.cpf || "",
 });
 
-// Atualiza state se `student` mudar (edição async, por ex.)
+// Atualiza state se `student` mudar
 watch(
   () => props.student,
   (newStudent) => {
@@ -83,7 +84,6 @@ function onSubmit(event: FormSubmitEvent<(typeof schema)["_input"]>) {
           v-maska="'###.###.###-##'"
           placeholder="000.000.000-00"
           class="w-full"
-          @keydown.enter.prevent
         />
       </UFormField>
 
@@ -95,3 +95,11 @@ function onSubmit(event: FormSubmitEvent<(typeof schema)["_input"]>) {
     </UForm>
   </UCard>
 </template>
+
+<script lang="ts">
+export default {
+  directives: {
+    maska: vMaska,
+  },
+};
+</script>
