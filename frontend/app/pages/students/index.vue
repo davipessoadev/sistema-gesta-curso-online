@@ -54,14 +54,6 @@ async function fetchStudents(pageNumber = 1) {
     `${config.public.apiBase}/students?page=${pageNumber}?${params.toString()}`
   );
 
-  if (error.value) {
-    toast.add({
-      title: "Erro ao buscar os alunos",
-      description: error.value.data.message,
-      color: "error",
-    });
-  }
-
   if (data.value) {
     students.value = data.value.data;
     total.value = data.value.total;
