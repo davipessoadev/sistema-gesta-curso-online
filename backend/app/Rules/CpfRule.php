@@ -21,10 +21,10 @@ class CpfRule implements ValidationRule
             return;
         }
 
-        if (preg_match('/(\d)\1{10}/', $cpf)) {
-            $fail('O CPF informado não é válido.');
-            return;
-        }
+        // if (preg_match('/(\d)\1{10}/', $cpf)) {
+        //     $fail('CPF NAO FUNCIONA.');
+        //     return;
+        // }
 
         for ($t = 9; $t < 11; $t++) {
             $d = 0;

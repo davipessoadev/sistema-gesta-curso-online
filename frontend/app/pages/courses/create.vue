@@ -20,7 +20,7 @@ async function handleSubmit(formData: {
   if (error.value) {
     toast.add({
       title: "Erro ao criar curso",
-      description: error.value.message,
+      description: error.value.data.message,
       color: "error",
     });
   } else {
