@@ -65,7 +65,7 @@ async function updateProgress(student: StudentsWithPivot, newProgress: number) {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6 p-4 md:p-6">
     <UCard v-if="course">
       <template #header>
         <h2 class="text-xl font-semibold">{{ course.name }}</h2>

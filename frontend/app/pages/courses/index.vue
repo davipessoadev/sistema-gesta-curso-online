@@ -158,8 +158,10 @@ async function confirmDelete() {
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex items-center justify-between mb-4">
-      <div>
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 w-full"
+    >
+      <div class="mb-4 md:mb-0">
         <h1 class="text-2xl font-bold">Cursos Disponíveis</h1>
         <p class="text-sm text-gray-500">
           Lista de todos os cursos cadastrados no sistema, com duração e
@@ -172,11 +174,19 @@ async function confirmDelete() {
       </NuxtLink>
     </div>
 
-    <div class="overflow-x-auto w-full">
-      <UTable :data="courses" :columns="columns" class="w-full table-auto" />
+    <div class="overflow-x-auto">
+      <UTable
+        :data="courses"
+        :columns="columns"
+        class="min-w-full table-auto"
+      />
     </div>
 
-    <UPagination v-model:page="page" :total="total" />
+    <UPagination
+      v-model:page="page"
+      :total="total"
+      class="flex justify-center"
+    />
 
     <ConfirmDeleteModal
       v-model:open="showDeleteModal"

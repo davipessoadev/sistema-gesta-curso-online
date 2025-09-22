@@ -35,8 +35,8 @@ async function fetchStudents() {
 <template>
   <UCard>
     <template #header>
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-semibold">Alunos Matriculados</h3>
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+        <h3 class="text-lg font-semibold mb-2 md:mb-0">Alunos Matriculados</h3>
 
         <UButton
           color="primary"
@@ -82,7 +82,7 @@ async function fetchStudents() {
             }
           },
         ]"
-        class="w-full table-auto"
+        class="min-w-full table-auto"
       />
     </div>
 

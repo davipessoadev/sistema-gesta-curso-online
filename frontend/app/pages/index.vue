@@ -56,7 +56,6 @@ async function fetchStats() {
 
 onMounted(fetchStats);
 
-// Computed para criar chartData reativo
 const chartData = computed(() => ({
   labels: courses.value.map((c) => c.name),
   datasets: [
@@ -76,7 +75,7 @@ const chartOptions = {
 
 <template>
   <div class="space-y-6 p-4">
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <UCard class="p-4">
         <h3 class="text-lg font-semibold">Total de Cursos</h3>
         <p class="text-2xl font-bold">{{ totalCourses }}</p>
@@ -87,7 +86,7 @@ const chartOptions = {
       </UCard>
     </div>
 
-    <UCard class="p-4">
+    <UCard class="p-4 w-full">
       <h3 class="text-lg font-semibold mb-4">Alunos por Curso</h3>
       <Bar v-if="courses.length" :data="chartData" :options="chartOptions" />
       <p v-else class="text-gray-500">Nenhum curso encontrado.</p>

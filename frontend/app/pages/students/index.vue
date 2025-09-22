@@ -97,8 +97,10 @@ const columns: TableColumn<Student>[] = [
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex items-center justify-between mb-4">
-      <div>
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between mb-4"
+    >
+      <div class="mb-4 md:mb-0">
         <h1 class="text-2xl font-bold">Alunos Cadastrados</h1>
         <p class="text-sm text-gray-500">
           Lista de todos os alunos registrados no sistema, com CPF e e-mail.
@@ -106,28 +108,41 @@ const columns: TableColumn<Student>[] = [
       </div>
 
       <NuxtLink to="/students/create">
-        <UButton color="primary" icon="i-lucide-plus"> Novo Alunos </UButton>
+        <UButton color="primary" icon="i-lucide-plus"> Novo Aluno </UButton>
       </NuxtLink>
     </div>
 
-    <div class="flex items-center gap-2">
-      <USelect v-model="filterValue" :items="filterOptions" class="w-30" />
-      <UInput v-model="filterSearch" />
+    <div class="flex flex-col md:flex-row md:items-center gap-2">
+      <USelect
+        v-model="filterValue"
+        :items="filterOptions"
+        class="w-full md:w-30"
+      />
+      <UInput v-model="filterSearch" class="w-full" />
 
       <UButton
         icon="i-lucide-search"
         size="md"
         color="neutral"
         variant="solid"
+        class="w-full md:w-auto"
         @click="() => fetchStudents(1)"
         >Buscar</UButton
       >
     </div>
 
     <div class="overflow-x-auto w-full">
-      <UTable :data="students" :columns="columns" class="w-full table-auto" />
+      <UTable
+        :data="students"
+        :columns="columns"
+        class="min-w-full table-auto"
+      />
     </div>
 
-    <UPagination v-model:page="page" :total="total" />
+    <UPagination
+      v-model:page="page"
+      :total="total"
+      class="flex justify-center"
+    />
   </div>
 </template>

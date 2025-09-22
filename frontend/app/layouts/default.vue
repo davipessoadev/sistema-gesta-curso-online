@@ -33,17 +33,17 @@ const toggleSidebar = () => {
 
 <template>
   <div class="flex min-h-screen">
-    <!-- Sidebar -->
     <aside
       :class="[
         'w-64 border-r border-border border-slate-800 bg-default transition-transform duration-300 ease-in-out',
-        'fixed top-0 left-0 h-full z-40',
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
         'md:translate-x-0 md:static',
+        isSidebarOpen
+          ? 'translate-x-0 fixed top-0 left-0 h-full z-40'
+          : '-translate-x-full fixed top-0 left-0 h-full z-40',
       ]"
     >
       <div class="p-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-text-primary">School Admin</h1>
+        <h1 class="text-xl font-bold text-text-primary">Gestão Curso Online</h1>
         <UButton
           icon="i-lucide-x"
           variant="ghost"
@@ -60,16 +60,13 @@ const toggleSidebar = () => {
       />
     </aside>
 
-    <!-- Overlay for mobile when sidebar is open -->
     <div
       v-if="isSidebarOpen"
-      class="fixed z-30 md:hidden"
+      class="fixed inset-0 z-30 bg-black opacity-50 md:hidden"
       @click="toggleSidebar"
     />
 
-    <!-- Main Content -->
     <div class="flex-1 flex flex-col">
-      <!-- Header with toggle button -->
       <header class="border-b border-border border-slate-800 p-4 md:p-6">
         <UButton
           icon="i-lucide-menu"
