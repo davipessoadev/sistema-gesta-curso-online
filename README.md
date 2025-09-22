@@ -14,7 +14,6 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
 ## Instalação e Configuração
 
 ### Pré-requisitos
-
 - Docker e Docker Compose instalados
 - Git
 - Node.js (para desenvolvimento frontend)
@@ -22,14 +21,12 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
 ### Passos para Instalação
 
 1. **Clone o repositório**
-
    ```bash
    git clone git@github.com:davipessoadev/sistema-gesta-curso-online.git
    cd sistema-gesta-curso-online
    ```
 
 2. **Configuração do Frontend**
-
    ```bash
    cd frontend
    npm install
@@ -38,29 +35,25 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
    ```
 
 3. **Configuração das Variáveis de Ambiente**
-
+   
    **Frontend**: Copie e configure o arquivo de variáveis de ambiente
-
    ```bash
    cp .env.example .env
    ```
-
+   
    **Backend**: Copie e configure o arquivo de variáveis de ambiente
-
    ```bash
    cd ../backend
    cp .env.example .env
    ```
 
 4. **Inicialização com Docker**
-
    ```bash
    # Na raiz do projeto
    docker-compose up -d
    ```
 
 5. **Instalação das Dependências do Backend**
-
    ```bash
    docker exec -it -u root sistema_gestao_curso_onlie_api composer install
    # ou para atualizar
@@ -71,10 +64,13 @@ O Sistema de Gestão de Curso Online é uma aplicação web completa desenvolvid
    ```bash
    docker exec -it -u root sistema_gestao_curso_onlie_api php artisan migrate
    ```
+## Documentação da API
+[Link pra documentação no ApiDog](https://5o233g45zz.apidog.io)
 
 ## Decisões Técnicas
 
 - **Nuxt UI**: Escolhido para acelerar o desenvolvimento do frontend, fornecendo componentes pré-construídos e uma interface moderna
+- **ApiDog**: Uma alternativa ao Postman ou Insomnia, e foi escolhida por disponibilizar documentação online e fácil de utilizar.
 
 ## Acesso à Aplicação
 
@@ -84,4 +80,4 @@ Após a instalação e configuração completa, a aplicação estará disponíve
 
 ---
 
-_Documentação criada para o Sistema de Gestão de Curso Online_
+*Documentação criada para o Sistema de Gestão de Curso Online*
